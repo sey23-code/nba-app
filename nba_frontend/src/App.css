@@ -1,0 +1,108 @@
+/* For Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #1d428a;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 3px solid rgb(200, 68, 68);
+}
+
+tr:nth-child(even) {
+  background-color: darkgray;
+}
+  
+tr:nth-child(odd) {
+  background-color: white;
+}
+
+tr:hover {
+  background-color: rgb(200, 68, 68);
+  transition: background-color 0.4s;
+}
+
+/* Page Style */
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  color: darkblue;
+}
+
+/* Link Styles */
+a {
+  color: #1d428a;
+  font-weight: bold
+}
+a:hover {
+  color: #c8102e;
+  text-decoration: underline;
+}
+
+.back_button {
+  display: block;
+  font-weight: bold;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #1d428a;
+  color: white;
+  border-radius: 5px;
+  border-color: black;
+  text-align: center;
+
+}
+.back_button:hover {
+  background-color: #c8102e;
+}
+
+input {
+  width: 150px;
+  height: 35px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid black;
+  text-align: center;
+  margin-left: 740px;
+  margin-bottom: 30px;
+  margin-top: -15px;
+}
+
+.player-card {
+  border: 1px;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  background-color: white;
+  text-align: center;
+}
+.player-card h2 {
+  color: #1d428a
+}
+
+.player-card p {
+  margin: 8px 0;
+  font-size: 12px
+}
+
+.header {
+  text-align: center;
+  margin-left: 25px;
+}
