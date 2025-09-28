@@ -10,6 +10,7 @@ function TeamsList() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
+    console.log("API_URL is:", API_URL);
     fetch(`${API_URL}/teams`)
       .then((res) => res.json())
       .then((data) => setTeams(data));
