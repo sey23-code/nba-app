@@ -9,9 +9,17 @@ from fastapi.middleware.cors import CORSMiddleware
 #Creates a FastAPI object
 app = FastAPI()
 #To allow React to talk to Fast API
+origins = [
+    "http://localhost:3000",  
+    "https://nba-app-murex.vercel.app",  
+    "https://nba-app-git-main-seydina-sows-projects.vercel.app",  
+    "https://nba-jnis39yft-seydina-sows-projects.vercel.app",
+    "https://nba-lsg6c6cxt-seydina-sows-projects.vercel.app"  
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React app origin
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
