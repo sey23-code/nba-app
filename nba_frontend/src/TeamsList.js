@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import nbaLogo from "./assets/NBA-Logo-1969.png";
 
+//Environment variable
+const API_URL = process.env.REACT_APP_API_URL;
+
 function TeamsList() {
   const [teams, setTeams] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/teams")
+    fetch(`${API_URL}/teams`)
       .then((res) => res.json())
       .then((data) => setTeams(data));
   }, []);
