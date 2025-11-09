@@ -4,6 +4,7 @@ import nbaLogo from "./assets/NBA-Logo-1969.png";
 
 //Environment variable
 const API_URL = process.env.REACT_APP_API_URL;
+console.log("Fetching from:", `${process.env.REACT_APP_API_URL}/teams`);
 
 function TeamsList() {
   const [teams, setTeams] = useState([]);
@@ -47,6 +48,9 @@ function TeamsList() {
       />
       <div style={{margin: "15px 0", marginLeft: "5px"}}>
         <Link to="/compare">Go to Player Comparison</Link>
+    </div>
+    <div style={{margin: "15px 0", marginLeft: "5px"}}>
+        <Link to="/games/today">Go to Today's Matchups</Link>
     </div>
       <table>
         <thead>

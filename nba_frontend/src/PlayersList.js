@@ -4,7 +4,7 @@ import { useEffect } from "react";
 function PlayersList() {
     const [players, setPlayers] = useState([])
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/players")
+        fetch("https://nba-backend.onrender.com/players")
             .then(res => res.json())
             .then(data => setPlayers(data))
     }, []);

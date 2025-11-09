@@ -3,13 +3,15 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+//Environment variable
+const API_URL = process.env.REACT_APP_API_URL;
 
 function RosterList() {
     const [rosterData, setRosterData] = useState({team_name: "", players: []})
     const { teamId } = useParams();
     const [search, setSearch]= useState("");
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/teams/${teamId}/players`)
+        fetch(`${API_URL}/teams/${teamId}/players`)
             .then(res => res.json())
             .then(data => {
                 console.log("Fetched data:", data);
@@ -35,6 +37,9 @@ function RosterList() {
                 placeholder="Search players..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                style={{
+                    marginLeft: "830px"
+                }}
             />
             <table>
                 <thead>

@@ -1,2 +1,13 @@
-node_modules/
+# macOS system files
 .DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.env/
+
+# Node modules (if you have frontend later)
+node_modules/

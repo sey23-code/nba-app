@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import PlayerCard from "./PlayerCard";
 import { Link } from "react-router-dom";
 
+//Environment variable
+const API_URL = process.env.REACT_APP_API_URL;
+
 function PlayerComparisonPage() {
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
@@ -15,7 +18,7 @@ function PlayerComparisonPage() {
   const [loading2, setLoading2] = useState(false);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/players")
+    fetch(`${API_URL}/players`)
       .then((res) => res.json())
       .then(setPlayers);
   }, []);
@@ -23,7 +26,7 @@ function PlayerComparisonPage() {
   useEffect(() => {
     if (selected1) {
       setLoading1(true);
-      fetch(`http://127.0.0.1:8000/players/${selected1.ID}/stats`)
+      fetch(`${API_URL}/players/${selected1.ID}/stats`)
         .then((res) => res.json())
         .then((data) => setData1(data))
         .finally(() => setLoading1(false));
@@ -33,7 +36,7 @@ function PlayerComparisonPage() {
   useEffect(() => {
     if (selected2) {
       setLoading2(true);
-      fetch(`http://127.0.0.1:8000/players/${selected2.ID}/stats`)
+      fetch(`${API_URL}/players/${selected2.ID}/stats`)
         .then((res) => res.json())
         .then((data) => setData2(data))
         .finally(() => setLoading2(false));

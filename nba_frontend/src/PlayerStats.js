@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useSearchParams } from "react-router-dom";
 
+//Environment variable
+const API_URL = process.env.REACT_APP_API_URL;
+
 function PlayerStats() {
   const { playerId } = useParams();
   const [data, setData] = useState({
@@ -15,9 +18,21 @@ function PlayerStats() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://127.0.0.1:8000/players/${playerId}/stats`)
-      .then((res) => res.json())
+    fetch(`${API_URL}/players/${playerId}/stats`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
       .then((data) => setData(data))
+      .catch((error) => {
+        console.error("Error: ", error);
+        setData({
+          player_name: "Player",
+          career_average: {},
+          stats: [],
+          message: "Error loading player stats."
+        });
+      })
       .finally(() => setLoading(false));
   }, [playerId, setData]);
 
@@ -62,11 +77,11 @@ function PlayerStats() {
               <p style= {{marginBottom: "4px", marginRight: "-325px"}}>
                 <strong>Career Averages</strong>
               </p>
-              <p style= {{margin: "2px 0", marginRight: "-325px"}}>PPG: {data.career_average.PPG}</p>
-              <p style= {{margin: "2px 0", marginRight: "-325px"}}>APG: {data.career_average.APG}</p>
-              <p style= {{margin: "2px 0", marginRight: "-325px"}}>RPG: {data.career_average.RPG}</p>
-              <p style= {{margin: "2px 0", marginRight: "-325px"}}>SPG: {data.career_average.SPG}</p>
-              <p style= {{margin: "2px 0", marginRight: "-325px"}}>BPG: {data.career_average.BPG}</p>
+              <p style= {{margin: "2px 0", marginRight: "-325px"}}>PPG: {data.career_average?.PPG ?? "N/A"}</p>
+              <p style= {{margin: "2px 0", marginRight: "-325px"}}>APG: {data.career_average?.APG ?? "N/A"}</p>
+              <p style= {{margin: "2px 0", marginRight: "-325px"}}>RPG: {data.career_average?.RPG ?? "N/A"}</p>
+              <p style= {{margin: "2px 0", marginRight: "-325px"}}>SPG: {data.career_average?.SPG ?? "N/A"}</p>
+              <p style= {{margin: "2px 0", marginRight: "-325px"}}>BPG: {data.career_average?.BPG ?? "N/A"}</p>
             </div>
           </div>
 
@@ -85,18 +100,24 @@ function PlayerStats() {
               </tr>
             </thead>
             <tbody>
-              {data.stats.map((season, index) => (
-                <tr key={index}>
-                  <td>{season.SEASON_ID}</td>
-                  <td>{season.TEAM_ABBREVIATION}</td>
-                  <td>{season.GP}</td>
-                  <td>{season.PPG}</td>
-                  <td>{season.APG}</td>
-                  <td>{season.RPG}</td>
-                  <td>{season.SPG}</td>
-                  <td>{season.BPG}</td>
+              {Array.isArray(data.stats) && data.stats.length > 0 ? (
+                data.stats.map((season, index) => (
+                  <tr key={index}>
+                    <td>{season.SEASON_ID}</td>
+                    <td>{season.TEAM_ABBREVIATION}</td>
+                    <td>{season.GP}</td>
+                    <td>{season.PPG}</td>
+                    <td>{season.APG}</td>
+                    <td>{season.RPG}</td>
+                    <td>{season.SPG}</td>
+                    <td>{season.BPG}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="8">No stats available for this player.</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </>
