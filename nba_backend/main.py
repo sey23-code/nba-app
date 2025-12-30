@@ -179,8 +179,6 @@ def get_games_today():
 
         games = scoreboardv2.ScoreboardV2(game_date=today)
         df = games.game_header.get_data_frame()
-        print(df.columns.tolist())   
-        print(df.head())
         if df.empty:
             return {"message": "No games today."}
         matchups = []

@@ -23,11 +23,20 @@ function PlayerStats() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((data) => setData(data))
+      .then((data) => {
+        //Sort seasons by descending order
+        const sortSeasons = [...data.stats].sort((a,b) => { 
+          return b.SEASON_ID.localeCompare(a.SEASON_ID)
+        });
+        setData({
+          ...data,
+          stats: sortSeasons
+        });
+      })
       .catch((error) => {
         console.error("Error: ", error);
         setData({
-          player_name: "Player",
+          player_name: "Unknown Player",
           career_average: {},
           stats: [],
           message: "Error loading player stats."
@@ -60,7 +69,8 @@ function PlayerStats() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              boxShadow: "0 4px 8px rgba(0,0,0,2)"
+              boxShadow: "0 4px 8px rgba(0,0,0,2)",
+              position: "relative"
             }}
           >
             {/* NBA Player image */}
@@ -68,12 +78,12 @@ function PlayerStats() {
             <img
               src={`https://cdn.nba.com/headshots/nba/latest/260x190/${playerId}.png`}
               alt={`${data.player_name}`}
-              style={{ width: "195px", height: "140px", marginTop: "220px", marginRight: "-235px" }}
+              style={{ width: "195px", height: "140px", position: "absolute", top: "90px", right: "20px" }}
             />
             </div>
             {/* NBA Player Career Averages */}
-            <div style={{textAlign: "left", marginTop: "200px", marginLeft: "50px"}}>
-              <h2 style={{ marginTop: "-360px", marginRight: "-150px" }}>{data.player_name}</h2>
+            <div style={{textAlign: "left", top: "180px", left: "50px"}}>
+              <h2 style={{ top: "10px", right: "50px" }}>{data.player_name}</h2>
               <p style= {{marginBottom: "4px", marginRight: "-325px"}}>
                 <strong>Career Averages</strong>
               </p>

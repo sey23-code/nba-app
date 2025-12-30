@@ -33,7 +33,7 @@ function TeamsList() {
         <img
           src={nbaLogo}
           alt="NBA Logo"
-          style={{ width: "160px", height: "100px", marginLeft: "670px" }}
+          style={{ width: "160px", height: "100px", marginLeft: "740px" }}
         />
         <h1 style={{ margin: 0, marginLeft: "-50px" }}>NBA Teams</h1>
       </div>
@@ -44,7 +44,7 @@ function TeamsList() {
         placeholder="Search teams..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        style={{ marginTop: "20px", padding: "6px", width: "250px" }}
+        style={{ marginTop: "20px", padding: "6px", width: "250px", marginLeft: "800px" }}
       />
       <div style={{margin: "15px 0", marginLeft: "5px"}}>
         <Link to="/compare">Go to Player Comparison</Link>

@@ -38,7 +38,7 @@ function RosterList() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 style={{
-                    marginLeft: "830px"
+                    marginLeft: "840px"
                 }}
             />
             <table>
