@@ -58,6 +58,7 @@ data["trend_tov_AWAY"] = data["avg_tov_last_5_AWAY"] / data["avg_tov_last_15_AWA
 data["trend_3pm_HOME"] = data["avg_3pm_last_5_HOME"] / data["avg_3pm_last_15_HOME"]
 data["trend_3pm_AWAY"] = data["avg_3pm_last_5_AWAY"] / data["avg_3pm_last_15_AWAY"]
 
+
 data = data.replace([np.inf, -np.inf], np.nan)
 
 #Spliting games -> 80% train / 20% test
@@ -75,7 +76,7 @@ y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(y_test, y_pred)
 report = classification_report(y_test, y_pred)
-#48% Accuracy score
+#48 -> 60% Accuracy score
 print(f"Accuracy score: {accuracy * 100}%")
 #print(report)
 
