@@ -63,6 +63,7 @@ data = data.replace([np.inf, -np.inf], np.nan)
 
 #Spliting games -> 80% train / 20% test
 split_index = int(len(data) * 0.8)
+print(split_index)
 #Using 199 games to train
 X_train = X.iloc[:split_index]
 X_test = X.iloc[split_index:] #Rest is testing games
@@ -70,24 +71,23 @@ y_train = y.iloc[:split_index]
 y_test = y.iloc[split_index:]
 
 #Logistic Regression algorithm
-model = LogisticRegression(max_iter=5000)
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+#model = LogisticRegression(max_iter=5000)
+#model.fit(X_train, y_train)
+#y_pred = model.predict(X_test)
 
-accuracy = accuracy_score(y_test, y_pred)
-report = classification_report(y_test, y_pred)
-#48 -> 60% Accuracy score
-print(f"Accuracy score: {accuracy * 100}%")
+#accuracy = accuracy_score(y_test, y_pred)
+#report = classification_report(y_test, y_pred)
+#48 -> 60% -> 49% Accuracy score
+#print(f"Accuracy score: {accuracy * 100}%")
 #print(report)
 
-print(f"y_pred distribution:\n{pd.Series(y_pred).value_counts()}")
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
 
 #Random Forest algorithm
-#model2 = RandomForestClassifier(n_estimators=500, random_state=42)
-#model2.fit(X_train, y_train)
-#y_pred = model2.predict(X_test)
-#accuracy = accuracy_score(y_pred, y_test)
-#48% -> 50% Accuracy score
-#print(f"Accuracy score: {accuracy * 100}%")
+model2 = RandomForestClassifier(n_estimators=500, random_state=42)
+model2.fit(X_train, y_train)
+y_pred = model2.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+report = classification_report(y_test, y_pred)
+#48% -> 50% -> 52.7% -> 100% Accuracy score
+print(f"Accuracy score: {accuracy * 100}%")
+print(report)
