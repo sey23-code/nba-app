@@ -10,7 +10,7 @@ function PlayerCard( { playerId, data}) {
             backgroundColor: "#f9f9f9"
         }}>
             <img
-              src={`https://cdn.nba.com/headshots/nba/latest/260x190/${playerId}.png`}
+              src={`https://a.espncdn.com/i/headshots/nba/players/full/${playerId}.png`}
               alt={`${data.player_name}`}
               style={{ width: "120px", height: "90px", marginRight: "20px" }}
             />

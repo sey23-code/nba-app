@@ -16,6 +16,7 @@ function PlayerComparisonPage() {
   const [data2, setData2] = useState(null);
   const [loading1, setLoading1] = useState(false);
   const [loading2, setLoading2] = useState(false);
+  const [selectedSeason, setSelectedSeason] = useState("career");
 
   useEffect(() => {
     fetch(`${API_URL}/players`)
@@ -42,7 +43,33 @@ function PlayerComparisonPage() {
         .finally(() => setLoading2(false));
     }
   }, [selected2]);
+  const commonSeasons =
+  data1 && data2
+    ? [...new Set(data1.stats.map((s) => s.SEASON_ID))]
+        .filter((season) =>
+          data2.stats.some((s) => s.SEASON_ID === season)
+        )
+        .sort()
+        .reverse()
+    : [];
+  const getComparisonData = (data) => {
+    if (!data) return null;
 
+    if (selectedSeason === "career") {
+      return data;
+    }
+
+    const seasonStats = data.stats.find(
+      (season) => season.SEASON_ID === selectedSeason
+    );
+
+    return {
+      ...data,
+      career_average: seasonStats || data.career_average,
+    };
+  };
+  const comparisonData1 = getComparisonData(data1);
+  const comparisonData2 = getComparisonData(data2);
   const filterPlayer1 = search1
     ? players
         .filter((p) =>
@@ -61,6 +88,9 @@ function PlayerComparisonPage() {
 
   return (
     <div>
+      <Link to="/">
+          Back To Teams List
+      </Link> 
       {/* Comparison header */}
       <h1 style={{ textAlign: "center" }}>Compare Two Players</h1>
 
@@ -154,23 +184,48 @@ function PlayerComparisonPage() {
       {/* Comparison */}
       {data1 && data2 && (
         <div style={{ marginTop: "50px" }}>
-          <h2 style={{ textAlign: "center" , marginTop: "20px"}}>Career Comparison</h2>
+          <div style={{ textAlign: "center", marginBottom: "25px" }}>
+            <label htmlFor="season-select" style={{ marginRight: "10px" }}>
+              Select Season:
+            </label>
+
+            <select
+              id="season-select"
+              value={selectedSeason}
+              onChange={(e) => setSelectedSeason(e.target.value)}
+              style={{
+                padding: "8px",
+                fontSize: "16px",
+                borderRadius: "5px",
+              }}
+            >
+              <option value="career">Career Averages</option>
+
+              {commonSeasons.map((season) => (
+                <option key={season} value={season}>
+                  {season}
+                </option>
+              ))}
+            </select>
+          </div>
+          <h2 style={{ textAlign: "center", marginTop: "20px" }}>
+            {selectedSeason === "career"
+              ? "Career Comparison"
+              : `${selectedSeason} Season Comparison`}
+          </h2>
 
           {/* Player cards above chart */}
           <div style={{ display: "flex", justifyContent: "center", gap: "30px" }}>
-            <PlayerCard playerId={selected1.ID} data={data1} />
-            <PlayerCard playerId={selected2.ID} data={data2} />
+            <PlayerCard playerId={selected1.ID} data={comparisonData1} />
+            <PlayerCard playerId={selected2.ID} data={comparisonData2} />
           </div>
 
           {/* Chart below */}
           <div style={{ marginTop: "40px" }}>
-            <PlayerComparison player1={data1} player2={data2} />
+            <PlayerComparison player1={comparisonData1} player2={comparisonData2} />
           </div>
         </div>
       )}
-      <Link to="/">
-                Back To Teams List
-    </Link> 
     </div>
   );
 }

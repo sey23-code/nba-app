@@ -23,6 +23,9 @@ function RosterList() {
         player["Player Name"].toLowerCase().includes(search.toLowerCase()))
     return (
     <div>
+        <Link to="/">
+            Back To Teams List
+        </Link> 
         {/* NBA Teams header*/}
         <h1>{rosterData.team_name} Roster</h1>
         <div style={{ paddingTop: "0px", textAlign: "center" }}>
@@ -69,9 +72,6 @@ function RosterList() {
                     ))}
                 </tbody>
             </table>
-            <Link to="/">
-                Back To Teams List
-            </Link> 
         </div>
     );    
 }

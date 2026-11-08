@@ -49,6 +49,7 @@ function PlayerStats() {
 
   return (
     <div>
+      {teamId && <Link to={`/team/${teamId}`}>Back To Roster</Link>}
       {/* Players header */}
       <h1>{data.player_name} Stats</h1>
 
@@ -76,7 +77,7 @@ function PlayerStats() {
             {/* NBA Player image */}
             <div style={{flex: "0 0 auto"}}>
             <img
-              src={`https://cdn.nba.com/headshots/nba/latest/260x190/${playerId}.png`}
+              src={`https://a.espncdn.com/i/headshots/nba/players/full/${playerId}.png`}
               alt={`${data.player_name}`}
               style={{ width: "195px", height: "140px", position: "absolute", top: "90px", right: "20px" }}
             />
@@ -132,8 +133,6 @@ function PlayerStats() {
           </table>
         </>
       )}
-
-      {teamId && <Link to={`/team/${teamId}`}>Back To Roster</Link>}
     </div>
   );
 }
