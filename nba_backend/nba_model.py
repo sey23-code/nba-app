@@ -61,14 +61,18 @@ data["trend_3pm_AWAY"] = data["avg_3pm_last_5_AWAY"] / data["avg_3pm_last_15_AWA
 
 data = data.replace([np.inf, -np.inf], np.nan)
 
-#Spliting games -> 80% train / 20% test
-split_index = int(len(data) * 0.8)
-print(split_index)
-#Using 199 games to train
-X_train = X.iloc[:split_index]
-X_test = X.iloc[split_index:] #Rest is testing games
-y_train = y.iloc[:split_index]
-y_test = y.iloc[split_index:]
+#Spliting games
+data["GAME_DATE_HOME"] = pd.to_datetime(data["GAME_DATE_HOME"])
+stop_date = '2025-12-22'
+#Training data
+train = data["GAME_DATE_HOME"] < stop_date
+#Testing data
+test = data["GAME_DATE_HOME"] >= stop_date
+
+X_train = X[train]
+X_test = X[test] 
+y_train = y[train]
+y_test = y[test]
 
 #Logistic Regression algorithm
 #model = LogisticRegression(max_iter=5000)
@@ -77,17 +81,15 @@ y_test = y.iloc[split_index:]
 
 #accuracy = accuracy_score(y_test, y_pred)
 #report = classification_report(y_test, y_pred)
-#48 -> 60% -> 49% Accuracy score
+#48 -> 60% -> 49% -> 52.6% -> 47.4% Accuracy score
 #print(f"Accuracy score: {accuracy * 100}%")
 #print(report)
-
 
 #Random Forest algorithm
 model2 = RandomForestClassifier(n_estimators=500, random_state=42)
 model2.fit(X_train, y_train)
 y_pred = model2.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
-report = classification_report(y_test, y_pred)
-#48% -> 50% -> 52.7% -> 100% Accuracy score
+#report = classification_report(y_test, y_pred)
+#48% -> 50% -> 52.7% -> 47.4% -> 49.6% Accuracy score
 print(f"Accuracy score: {accuracy * 100}%")
-print(report)
